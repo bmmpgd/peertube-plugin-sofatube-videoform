@@ -1,20 +1,12 @@
-async function register ({
-  registerHook,
-  registerSetting,
-  settingsManager,
-  storageManager,
-  videoCategoryManager,
-  videoLicenceManager,
-  videoLanguageManager
-}) {
+import { RegisterServerOptions } from '@peertube/peertube-types'
 
+async function register ({ registerHook, peertubeHelpers }: RegisterServerOptions) {
+    // Register client files that will be injected
+    await peertubeHelpers.plugin.registerClientFiles([
+        'client/common-client-plugin.js'
+    ])
 }
 
-async function unregister () {
-  return
-}
-
-module.exports = {
-  register,
-  unregister
+export {
+    register
 }

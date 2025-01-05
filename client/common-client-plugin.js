@@ -1,43 +1,27 @@
-function register ({ registerHook, registerVideoField, peertubeHelpers }) {
-    const commonOptions = {
-        name: 'Course',
-        label: 'Course the video was created for',
-        descriptionHTML: 'Dropdown of SOFA courses',
+function register ({ registerVideoField }) {
+    const courseOptions = [
+        { label: 'SOFA-101 Intro to Film', value: 'sofa-101' },
+        { label: 'SOFA-201 Film History', value: 'sofa-201' },
+        { label: 'SOFA-301 Advanced Cinematography', value: 'sofa-301' }
+        // Add more courses as needed
+    ]
 
-        // type: 'input' | 'input-checkbox' | 'input-password' | 'input-textarea' | 'markdown-text' | 'markdown-enhanced' | 'select' | 'html'
-        // /!\ 'input-checkbox' could send "false" and "true" strings instead of boolean
+    registerVideoField({
+        name: 'course-select',
+        label: 'Course',
         type: 'select',
-
-        default: '',
-
-        // Optional, to hide a field depending on the current form state
-        // liveVideo is in the options object when the user is creating/updating a live
-        // videoToUpdate is in the options object when the user is updating a video
-        /*hidden: ({ formValues, videoToUpdate, liveVideo }) => {
-            return formValues.pluginData['other-field'] === 'toto'
-        },*/
-
-        // Optional, to display an error depending on the form state
-        error: ({ formValues, value }) => {
-            if (formValues['privacy'] !== 1 && formValues['privacy'] !== 2) return { error: false }
-            if (value === true) return { error: false }
-
-            return { error: true, text: 'Should be enabled' }
+        options: courseOptions,
+        default: null,
+        // This will appear in the video upload form
+        descriptionHTML: 'Select the course this video belongs to',
+        // Optional validation
+        validate: async (value) => {
+            if (!value) return { error: 'Please select a course' }
+            return { error: null }
         }
-    }
-
-    const videoFormOptions = {
-        // Optional, to choose to put your setting in a specific tab in video form
-        // type: 'main' | 'plugin-settings'
-        tab: 'main'
-    }
-
-    for (const type of [ 'upload', 'import-url', 'import-torrent', 'update', 'go-live' ]) {
-        registerVideoField(commonOptions, { type, ...videoFormOptions  })
-    }
-
+    })
 }
 
 export {
-  register
+    register
 }
