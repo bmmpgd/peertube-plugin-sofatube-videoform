@@ -1,7 +1,7 @@
 {
   "name": "peertube-plugin-sofatube-videoform",
   "description": "PeerTube plugin to add/remove options from the video submission for SOFAtube.",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "bmmpgd",
   "bugs": "https://framagit.org/framasoft/peertube/peertube-plugin-quickstart/issues",
   "clientScripts": [
@@ -18,7 +18,7 @@
   "engine": {
     "peertube": ">=7.0.0"
   },
-  "homepage": "https://framagit.org/framasoft/peertube/peertube-plugin-quickstart",
+  "homepage": "https://github.com/bmmpgd/peertube-plugin-sofatube-videoform",
   "keywords": [
     "peertube",
     "plugin"
