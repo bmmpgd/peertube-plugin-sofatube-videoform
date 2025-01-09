@@ -57,6 +57,10 @@ async function register({registerVideoField, registerHook}) {
     })
 }
 
+async function unregister () {
+    return
+}
+
 module.exports = {
     register
 }
