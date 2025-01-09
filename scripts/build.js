@@ -1,9 +1,7 @@
 const path = require('path')
 const esbuild = require('esbuild')
 
-const clientFiles = [
-    'common-client-plugin.js'
-]
+const clientFiles = []
 
 const configs = clientFiles.map(f => ({
     entryPoints: [path.resolve(__dirname, '..', 'client', f)],

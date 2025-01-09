@@ -62,5 +62,6 @@ async function unregister () {
 }
 
 module.exports = {
-    register
+    register,
+    unregister
 }
