@@ -1,44 +1,73 @@
-async function register({registerVideoField, registerHook}) {
+async function register ({
+                             registerHook,
+                             storageManager,
+                             registerSettingsScript
+                         }) {
+    const fieldNames = ['course', 'program'];
+
+    // Store data associated to this video when created or updated
     registerHook({
-        target: 'action:video-watch.video.loaded',
-        handler: ({video}) => {
-            if (!video.pluginData?.['course-select']) return
+        target: 'action:api.video.updated',
+        handler: async ({ video, req }) => {
+            console.log('Server: Video updated hook triggered');
+            console.log('Request body:', req.body);
 
-            const courseValue = video.pluginData['course-select']
-            const course = courseOptions.find(c => c.value === courseValue)
+            if (!req.body.pluginData) {
+                console.log('Server: No pluginData in request');
+                return;
+            }
 
-            if (!course) return
+            console.log('Server: Found pluginData in request:', req.body.pluginData);
 
-            // Create and insert course info element
-            const courseInfo = document.createElement('div')
-            courseInfo.className = 'course-info'
-            courseInfo.innerHTML = `
-        <style>
-          .course-info {
-            margin: 10px 0;
-            padding: 8px;
-            background: #f5f5f5;
-            border-radius: 4px;
-          }
-          .course-label {
-            font-weight: bold;
-            margin-right: 5px;
-          }
-        </style>
-        <span class="course-label">Course:</span>
-        <span>${course.label}</span>
-      `
-
-            const videoInfoElement = document.querySelector('.video-info-first-row')
-            if (videoInfoElement) {
-                videoInfoElement.appendChild(courseInfo)
+            // Store each field's value
+            for (const fieldName of fieldNames) {
+                const value = req.body.pluginData[fieldName];
+                if (value !== undefined) {
+                    console.log(`Server: Storing ${fieldName} value:`, value);
+                    await storageManager.storeData(`${fieldName}-${video.id}`, value);
+                }
             }
         }
-    })
-}
+    });
 
+    // Add your custom value to the video, so the client autofill your field using the previously stored value
+    registerHook({
+        target: 'filter:api.video.get.result',
+        handler: async (video) => {
+            console.log(video);
+            if (!video) return video
+            if (!video.pluginData) video.pluginData = {}
+
+            const result = await storageManager.getData(fieldName + '-' + video.id)
+            video.pluginData[fieldName] = result
+
+            return video
+        }
+    })
+
+    registerHook({
+        target: 'action:api.video.created',
+        handler: async ({ video, req }) => {
+            console.log('Server: Video created hook triggered');
+
+            if (!req.body.pluginData) {
+                console.log('Server: No pluginData in creation request');
+                return;
+            }
+
+            // Store each field's value
+            for (const fieldName of fieldNames) {
+                const value = req.body.pluginData[fieldName];
+                if (value !== undefined) {
+                    console.log(`Server: Storing ${fieldName} value on creation:`, value);
+                    await storageManager.storeData(`${fieldName}-${video.id}`, value);
+                }
+            }
+        }
+    });
+}
 async function unregister () {
-    return
+    return;
 }
 
 module.exports = {
