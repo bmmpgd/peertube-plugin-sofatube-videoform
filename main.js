@@ -3,7 +3,7 @@ async function register ({
                              storageManager,
                              registerSetting
                          }) {
-    const fieldNames = ['course', 'program'];
+    const fieldNames = ['course', 'program', 'year', 'genre', 'instructor', 'tier'];
 
     registerSetting({
         name: 'enable-custom',
@@ -24,10 +24,11 @@ async function register ({
             // Store each field's value
             const annotationsText = body.pluginData[fieldNames[0]]
             if (!annotationsText) return
-
-            const value = [body.pluginData[fieldNames[0]], body.pluginData[fieldNames[1]]];
+            const value = [];
+            for (const fieldName of fieldNames) {
+                value.push({fieldName: body.pluginData[fieldName]});
+            }
             storageManager.storeData('sofatube' + '-' + video.id, value);
-
         }
     })
 

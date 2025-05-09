@@ -1,5 +1,10 @@
 // client/commonclient-plugin.js
+const courseOptions = import('../assets/formfields/courses');
+const programOptions = import('../assets/formfields/programs');
+const genreOptions = import('../assets/formfields/genre');
+const instructorOptions = import('../assets/formfields/instructors');
 async function register ({ registerVideoField, registerHook, peertubeHelpers }) {
+
 
     for (const type of ['upload', 'import-url', 'import-torrent', 'update']) {
         // the tab that the form field will show up in during video submission
@@ -44,6 +49,78 @@ async function register ({ registerVideoField, registerHook, peertubeHelpers }) 
             error: ({ formValues, value }) => {
                 if (value) return { error: false }
                 return { error: true, text: 'Please select a program' }
+            }
+        }, videoFormTab );
+        registerVideoField({
+            name: 'year',
+            label: 'Year',
+            type: 'select',
+            options: [
+                {label: '1', value: '1'},
+                {label: '2', value: '2'},
+                {label: '3', value: '3'},
+                {label: '4', value: '4'},
+                {label: '5', value: '5'},
+                {label: '6', value: '6'},
+            ],
+            default: '1',
+            descriptionHTML: await peertubeHelpers.translate('Select your program year level.'),
+            error: ({ formValues, value }) => {
+                if (value) return { error: false }
+                return { error: true, text: 'Please select a year level' }
+            }
+        }, videoFormTab );
+        registerVideoField({
+            name: 'genre',
+            label: 'Genre',
+            type: 'select',
+            options: [
+                {label: 'Fiction', value: 'fiction'},
+                {label: 'Non-fiction', value: 'nonfiction'},
+                {label: 'Experimental', value: 'experimental'},
+                {label: 'Documentary', value: 'documentary'},
+                {label: '3D Animation', value: '3danimation'},
+                {label: '2D Animation', value: '2danimation'},
+                {label: 'Stop motion', value: 'stopmotion'},
+                {label: 'Craft track', value: 'crafttrack'}
+            ],
+            default: '1',
+            descriptionHTML: await peertubeHelpers.translate('Select your program year level.'),
+            error: ({ formValues, value }) => {
+                if (value) return { error: false }
+                return { error: true, text: 'Please select a year level' }
+            }
+        }, videoFormTab );
+        registerVideoField({
+            name: 'instructor',
+            label: 'Instructor',
+            type: 'select',
+            options: [
+                {label: 'Ricardo Figueroa', value: 'rrfppr'},
+                {label: 'Munjal Yagnik', value: 'mhypph'},
+                {label: 'Vashti Anderson', value: 'vxapph'},
+                {label: 'David Long', value: 'dllppr'}
+            ],
+            default: '',
+            descriptionHTML: await peertubeHelpers.translate('Select the professor for the course.'),
+            error: ({ formValues, value }) => {
+                if (value) return { error: false }
+                return { error: true, text: 'Please select a professor.' }
+            }
+        }, videoFormTab );
+        registerVideoField({
+            name: 'tier',
+            label: 'Tier Level',
+            type: 'select',
+            options: [
+                {label: 'Tier 1', value: '1'},
+                {label: 'Tier 2', value: '2'}
+            ],
+            default: '',
+            descriptionHTML: '',
+            error: ({ formValues, value }) => {
+                if (value) return { error: false }
+                return { error: true, text: 'Please select a tier level.' }
             }
         }, videoFormTab );
     }
