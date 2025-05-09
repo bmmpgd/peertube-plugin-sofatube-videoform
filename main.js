@@ -24,10 +24,11 @@ async function register ({
             // Store each field's value
             const annotationsText = body.pluginData[fieldNames[0]]
             if (!annotationsText) return
-            const value = [];
-            for (const fieldName of fieldNames) {
-                value.push({fieldName: body.pluginData[fieldName]});
-            }
+            const value = fieldNames.map(fieldName => {
+                return {
+                    [fieldName]: body.pluginData[fieldName]
+                };
+            });
             storageManager.storeData('sofatube' + '-' + video.id, value);
         }
     })
