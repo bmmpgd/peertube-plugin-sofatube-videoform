@@ -15,9 +15,9 @@ async function register ({ registerVideoField, registerHook, peertubeHelpers }) 
             label: 'Course',
             type: 'select',
             options: [
-                {label: 'SOFA-101 Intro to Film', value: 'sofa-101'},
-                {label: 'SOFA-201 Film History', value: 'sofa-201'},
-                {label: 'SOFA-301 Advanced Cinematography', value: 'sofa-301'}
+                {label: 'SOFA-101 Intro to Film', value: 'SOFA-101 Intro to Film'},
+                {label: 'SOFA-201 Film History', value: 'SOFA-201 Film History'},
+                {label: 'SOFA-301 Advanced Cinematography', value: 'SOFA-301 Advanced Cinematography'}
             ],
             default: '',
             descriptionHTML: await peertubeHelpers.translate('Select the course this video was made for'),
@@ -36,11 +36,11 @@ async function register ({ registerVideoField, registerHook, peertubeHelpers }) 
                 {label: 'DIGCIME', value: 'Motion Picture Science (2MJ)'},
                 {label: 'DIGCIME-2M', value: 'Motion Picture Science (2MJ)'},
                 {label: 'FILMAN', value: 'Film & Animation (2M)'},
-                {label: 'JPHC', value: 'rit-plan-JPHC'},
-                {label: 'JPHF', value: 'rit-plan-JPHF'},
-                {label: 'JPHQ', value: 'rit-plan-JPHQ'},
-                {label: 'SOFANM', value: 'rit-plan-SOFANM'},
-                {label: 'SOFANM-BFA', value: 'rit-plan-SOFANM-BFA'},
+                {label: 'JPHC', value: 'RIT-plan-JPHC'},
+                {label: 'JPHF', value: 'RIT-plan-JPHF'},
+                {label: 'JPHQ', value: 'RIT-plan-JPHQ'},
+                {label: 'SOFANM', value: 'RIT-plan-SOFANM'},
+                {label: 'SOFANM-BFA', value: 'RIT-plan-SOFANM-BFA'},
                 {label: 'DIGCIME-BS', value: 'Motion Picture Science (BS)'},
                 {label: 'FILMAN-MFA', value: 'Film and Animation (MFA)'},
             ],
@@ -75,14 +75,14 @@ async function register ({ registerVideoField, registerHook, peertubeHelpers }) 
             label: 'Genre',
             type: 'select',
             options: [
-                {label: 'Fiction', value: 'fiction'},
-                {label: 'Non-fiction', value: 'nonfiction'},
-                {label: 'Experimental', value: 'experimental'},
-                {label: 'Documentary', value: 'documentary'},
-                {label: '3D Animation', value: '3danimation'},
-                {label: '2D Animation', value: '2danimation'},
-                {label: 'Stop motion', value: 'stopmotion'},
-                {label: 'Craft track', value: 'crafttrack'}
+                {label: 'Fiction', value: 'Fiction'},
+                {label: 'Non-fiction', value: 'Non-fiction'},
+                {label: 'Experimental', value: 'Experimental'},
+                {label: 'Documentary', value: 'Documentary'},
+                {label: '3D Animation', value: '3D Animation'},
+                {label: '2D Animation', value: '2D Animation'},
+                {label: 'Stop motion', value: 'Stop motion'},
+                {label: 'Craft track', value: 'Craft track'}
             ],
             default: '1',
             descriptionHTML: await peertubeHelpers.translate('Select your program year level.'),
@@ -96,10 +96,10 @@ async function register ({ registerVideoField, registerHook, peertubeHelpers }) 
             label: 'Instructor',
             type: 'select',
             options: [
-                {label: 'Ricardo Figueroa', value: 'rrfppr'},
-                {label: 'Munjal Yagnik', value: 'mhypph'},
-                {label: 'Vashti Anderson', value: 'vxapph'},
-                {label: 'David Long', value: 'dllppr'}
+                {label: 'Ricardo Figueroa', value: 'Ricardo Figueroa'},
+                {label: 'Munjal Yagnik', value: 'Munjal Yagnik'},
+                {label: 'Vashti Anderson', value: 'Vashti Anderson'},
+                {label: 'David Long', value: 'David Long'}
             ],
             default: '',
             descriptionHTML: await peertubeHelpers.translate('Select the professor for the course.'),
@@ -128,28 +128,28 @@ async function register ({ registerVideoField, registerHook, peertubeHelpers }) 
     registerHook({
         target: 'action:video-watch.player.loaded',
         handler: (video) => {
-            //console.log('PLAYER LOADED, VIDEO INFO: ', video.video.pluginData);
-            const divElement = document.createElement('div');
-            divElement.className = 'attribute';
-            divElement.setAttribute('_ngcontent-ng-c3551149677', '');
+            for (const field of video.video.pluginData) {
+                const divElement = document.createElement('div');
+                divElement.className = 'attribute';
+                divElement.setAttribute('_ngcontent-ng-c3551149677', '');
 
 // Create the first span (label)
-            const labelSpan = document.createElement('span');
-            labelSpan.className = 'attribute-label';
-            labelSpan.setAttribute('_ngcontent-ng-c3551149677', '');
-            labelSpan.textContent = 'Course';
+                const labelSpan = document.createElement('span');
+                labelSpan.className = 'attribute-label';
+                labelSpan.setAttribute('_ngcontent-ng-c3551149677', '');
+                labelSpan.textContent = Object.keys(field);
 
 // Create the second span (value)
-            const valueSpan = document.createElement('span');
-            valueSpan.className = 'attribute-value';
-            valueSpan.setAttribute('_ngcontent-ng-c3551149677', '');
-            valueSpan.textContent = video.video.pluginData;
+                const valueSpan = document.createElement('span');
+                valueSpan.className = 'attribute-value';
+                valueSpan.setAttribute('_ngcontent-ng-c3551149677', '');
+                valueSpan.textContent = Object.values(field);
 
 // Append the spans to the div
-            divElement.appendChild(labelSpan);
-            divElement.appendChild(valueSpan);
-            document.getElementsByTagName('my-video-attributes')[0].append(divElement);
-
+                divElement.appendChild(labelSpan);
+                divElement.appendChild(valueSpan);
+                document.getElementsByTagName('my-video-attributes')[0].append(divElement);
+            }
         }
     });
 }

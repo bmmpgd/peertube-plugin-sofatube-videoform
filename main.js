@@ -3,7 +3,7 @@ async function register ({
                              storageManager,
                              registerSetting
                          }) {
-    const fieldNames = ['course', 'program', 'year', 'genre', 'instructor', 'tier'];
+    const fieldNames = ['Course', 'Program', 'Year', 'Genre', 'Instructor', 'Tier'];
 
     registerSetting({
         name: 'enable-custom',
