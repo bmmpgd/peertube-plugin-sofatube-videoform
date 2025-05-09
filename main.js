@@ -24,7 +24,7 @@ async function register ({
             console.log('Server: Found pluginData in request:', body.pluginData);
 
             // Store each field's value
-                const value = [body.pluginData[fieldName[0]], body.pluginData[fieldName[1]]];
+                const value = [body.pluginData[fieldNames[0]], body.pluginData[fieldNames[1]]];
                 if (!value) return
 
                 await storageManager.storeData('sofatube' + '-' + video.id, value);
