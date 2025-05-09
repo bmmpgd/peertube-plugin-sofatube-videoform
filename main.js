@@ -24,13 +24,11 @@ async function register ({
             console.log('Server: Found pluginData in request:', body.pluginData);
 
             // Store each field's value
-            for (const fieldName of fieldNames) {
-                const value = body.pluginData[fieldName];
+                const value = [body.pluginData[fieldName[0]], body.pluginData[fieldName[1]]];
                 if (!value) return
 
-                await storageManager.storeData(fieldName + '-' + video.id, value);
+                await storageManager.storeData('sofatube' + '-' + video.id, value);
 
-            }
         }
     })
 
@@ -41,32 +39,12 @@ async function register ({
             if (!video) return video
             if (!video.pluginData) video.pluginData = {}
 
-            const result = await storageManager.getData('course' + '-' + video.id)
-            video.pluginData['course'] = result
+            const result = await storageManager.getData('sofatube' + '-' + video.id)
+            //video.pluginData['course'] = result
             return result
         }
     })
 
-    /*registerHook({
-        target: 'action:api.video.created',
-        handler: async ({ video, req }) => {
-            console.log('Server: Video created hook triggered');
-
-            if (!req.body.pluginData) {
-                console.log('Server: No pluginData in creation request');
-                return;
-            }
-
-            // Store each field's value
-            for (const fieldName of fieldNames) {
-                const value = req.body.pluginData[fieldName];
-                if (value !== undefined) {
-                    console.log(`Server: Storing ${fieldName} value on creation:`, value);
-                    await storageManager.storeData(`${fieldName}-${video.id}`, value);
-                }
-            }
-        }
-    });*/
 }
 async function unregister () {
     return

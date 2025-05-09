@@ -20,7 +20,7 @@ async function register ({ registerVideoField, registerHook, peertubeHelpers }) 
                 if (value) return { error: false }
                 return { error: true, text: 'Please select a course' }
             }
-        }, { type });
+        }, videoFormTab);
 
         registerVideoField({
             name: 'program',
@@ -45,7 +45,7 @@ async function register ({ registerVideoField, registerHook, peertubeHelpers }) 
                 if (value) return { error: false }
                 return { error: true, text: 'Please select a program' }
             }
-        }, { type });
+        }, videoFormTab );
     }
 
     registerHook({
