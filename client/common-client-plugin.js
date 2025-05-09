@@ -1,7 +1,7 @@
 // client/commonclient-plugin.js
 async function register ({ registerVideoField, storageManager, registerHook, peertubeHelpers }) {
 
-    for (const type of ['upload', 'update']) {
+    for (const type of ['upload', 'import-url', 'import-torrent', 'update']) {
         // the tab that the form field will show up in during video submission
         const videoFormTab = { type, tab: 'main' };
 
@@ -15,12 +15,12 @@ async function register ({ registerVideoField, storageManager, registerHook, pee
                 {label: 'SOFA-301 Advanced Cinematography', value: 'sofa-301'}
             ],
             default: '',
-            descriptionHTML: 'Select the course this video was made for',
+            descriptionHTML: await peertubeHelpers.translate('Select the course this video was made for'),
             error: ({ formValues, value }) => {
                 if (value) return { error: false }
                 return { error: true, text: 'Please select a course' }
             }
-        }, { type, ...videoFormTab });
+        }, { type });
 
         registerVideoField({
             name: 'program',
@@ -40,12 +40,12 @@ async function register ({ registerVideoField, storageManager, registerHook, pee
                 {label: 'FILMAN-MFA', value: 'Film and Animation (MFA)'},
             ],
             default: '',
-            descriptionHTML: 'Select your RIT program',
+            descriptionHTML: await peertubeHelpers.translate('Select your RIT program'),
             error: ({ formValues, value }) => {
                 if (value) return { error: false }
                 return { error: true, text: 'Please select a program' }
             }
-        }, { type, ...videoFormTab });
+        }, { type });
     }
 
     // Add your custom value to the video, so the client autofill your field using the previously stored value
@@ -62,6 +62,13 @@ async function register ({ registerVideoField, storageManager, registerHook, pee
             return video
         }
     })
+
+    registerHook({
+        target: 'action:video-edit.form.updated',
+        handler: async ({ video, req }) => {
+            console.log('Server: Video updated hook triggered', video);
+            console.log('Request body:', req);
+        }});
 
     registerHook({
         target: 'filter:api.video.update.params',
