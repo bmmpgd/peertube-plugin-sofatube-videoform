@@ -49,7 +49,7 @@ async function register ({ registerVideoField, storageManager, registerHook, pee
     }
 
     // Add your custom value to the video, so the client autofill your field using the previously stored value
-    registerHook({
+    /*registerHook({
         target: 'filter:api.video.get.result',
         handler: async (video) => {
             console.log('VIDEO LOADED, filter:api.video.get.result, MAIN.JS');
@@ -61,7 +61,7 @@ async function register ({ registerVideoField, storageManager, registerHook, pee
 
             return video
         }
-    })
+    })*/
 
     registerHook({
         target: 'action:video-edit.form.updated',
@@ -96,7 +96,7 @@ async function register ({ registerVideoField, storageManager, registerHook, pee
     registerHook({
         target: 'action:video-watch.player.loaded',
         handler: (video) => {
-            console.log('PLAYER LOADED, VIDEO INFO: ', video.video.pluginData);
+            //console.log('PLAYER LOADED, VIDEO INFO: ', video.video.pluginData);
             const divElement = document.createElement('div');
             divElement.className = 'attribute';
             divElement.setAttribute('_ngcontent-ng-c3551149677', '');

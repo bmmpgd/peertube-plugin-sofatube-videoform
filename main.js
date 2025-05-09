@@ -47,7 +47,7 @@ async function register ({
         }
     })
 
-    registerHook({
+    /*registerHook({
         target: 'action:api.video.created',
         handler: async ({ video, req }) => {
             console.log('Server: Video created hook triggered');
@@ -66,7 +66,7 @@ async function register ({
                 }
             }
         }
-    });
+    });*/
 }
 async function unregister () {
     return;
