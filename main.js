@@ -1,7 +1,7 @@
 async function register ({
                              registerHook,
                              storageManager,
-                             registerSettingsScript
+                             registerSetting
                          }) {
     const fieldNames = ['course', 'program'];
 
