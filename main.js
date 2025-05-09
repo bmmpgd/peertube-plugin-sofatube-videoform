@@ -21,13 +21,12 @@ async function register ({
         handler: async ({ video, body }) => {
             if (!body.pluginData) return;
 
-            console.log('Server: Found pluginData in request:', body.pluginData);
-
             // Store each field's value
-                const value = [body.pluginData[fieldNames[0]], body.pluginData[fieldNames[1]]];
-                if (!value) return
+            const annotationsText = body.pluginData[fieldNames[0]]
+            if (!annotationsText) return
 
-                await storageManager.storeData('sofatube' + '-' + video.id, value);
+            const value = [body.pluginData[fieldNames[0]], body.pluginData[fieldNames[1]]];
+            storageManager.storeData('sofatube' + '-' + video.id, value);
 
         }
     })
@@ -40,8 +39,8 @@ async function register ({
             if (!video.pluginData) video.pluginData = {}
 
             const result = await storageManager.getData('sofatube' + '-' + video.id)
-            //video.pluginData['course'] = result
-            return result
+            video.pluginData = result
+            return video
         }
     })
 
