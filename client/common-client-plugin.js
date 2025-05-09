@@ -11,7 +11,7 @@ async function register ({ registerVideoField, registerHook, peertubeHelpers }) 
         const videoFormTab = { type, tab: 'main' };
 
         registerVideoField({
-            name: 'course',
+            name: 'Course',
             label: 'Course',
             type: 'select',
             options: [
@@ -28,7 +28,7 @@ async function register ({ registerVideoField, registerHook, peertubeHelpers }) 
         }, videoFormTab);
 
         registerVideoField({
-            name: 'program',
+            name: 'Program',
             label: 'Program',
             type: 'select',
             options: [
@@ -52,7 +52,7 @@ async function register ({ registerVideoField, registerHook, peertubeHelpers }) 
             }
         }, videoFormTab );
         registerVideoField({
-            name: 'year',
+            name: 'Year',
             label: 'Year',
             type: 'select',
             options: [
@@ -71,7 +71,7 @@ async function register ({ registerVideoField, registerHook, peertubeHelpers }) 
             }
         }, videoFormTab );
         registerVideoField({
-            name: 'genre',
+            name: 'Genre',
             label: 'Genre',
             type: 'select',
             options: [
@@ -92,7 +92,7 @@ async function register ({ registerVideoField, registerHook, peertubeHelpers }) 
             }
         }, videoFormTab );
         registerVideoField({
-            name: 'instructor',
+            name: 'Instructor',
             label: 'Instructor',
             type: 'select',
             options: [
@@ -109,7 +109,7 @@ async function register ({ registerVideoField, registerHook, peertubeHelpers }) 
             }
         }, videoFormTab );
         registerVideoField({
-            name: 'tier',
+            name: 'Tier',
             label: 'Tier Level',
             type: 'select',
             options: [
