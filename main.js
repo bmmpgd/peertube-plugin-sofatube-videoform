@@ -40,13 +40,10 @@ async function register ({
         handler: async (video) => {
             if (!video) return video
             if (!video.pluginData) video.pluginData = {}
-            const data = [];
-            for (const fieldName of fieldNames) {
-                const result = await storageManager.getData(fieldName + '-' + video.id)
-                video.pluginData[fieldName] = result
-                data.push(video.pluginData[fieldName])
-            }
-            return data
+
+            const result = await storageManager.getData('course' + '-' + video.id)
+            video.pluginData['course'] = result
+            return result
         }
     })
 
