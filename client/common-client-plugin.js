@@ -1,5 +1,5 @@
 // client/commonclient-plugin.js
-async function register ({ registerVideoField, storageManager, registerHook, peertubeHelpers }) {
+async function register ({ registerVideoField, registerHook, peertubeHelpers }) {
 
     for (const type of ['upload', 'import-url', 'import-torrent', 'update']) {
         // the tab that the form field will show up in during video submission
@@ -48,51 +48,6 @@ async function register ({ registerVideoField, storageManager, registerHook, pee
         }, { type });
     }
 
-    // Add your custom value to the video, so the client autofill your field using the previously stored value
-    /*registerHook({
-        target: 'filter:api.video.get.result',
-        handler: async (video) => {
-            console.log('VIDEO LOADED, filter:api.video.get.result, MAIN.JS');
-            if (!video) return video
-            if (!video.pluginData) video.pluginData = {}
-
-            const result = await storageManager.getData(fieldName + '-' + video.id)
-            video.pluginData[fieldName] = result
-
-            return video
-        }
-    })*/
-
-    registerHook({
-        target: 'action:video-edit.form.updated',
-        handler: async ({ video, req }) => {
-            console.log('Server: Video updated hook triggered', video);
-            console.log('Request body:', req);
-        }});
-
-    registerHook({
-        target: 'filter:api.video.update.params',
-        handler: (params) => {
-            console.log('Update params before modification:', params);
-
-            if (!params.pluginData) {
-                params.pluginData = {};
-            }
-
-            // Make sure we're passing along our custom field values
-            for (const field of fieldNames) {
-                if (params[field] !== undefined) {
-                    params.pluginData[field] = params[field];
-                    console.log(`Adding ${field} to pluginData:`, params.pluginData[field]);
-                }
-            }
-
-            console.log('Modified update params:', params);
-            return params;
-        }
-    });
-
-
     registerHook({
         target: 'action:video-watch.player.loaded',
         handler: (video) => {
@@ -120,8 +75,6 @@ async function register ({ registerVideoField, storageManager, registerHook, pee
 
         }
     });
-
-
 }
 
 export {

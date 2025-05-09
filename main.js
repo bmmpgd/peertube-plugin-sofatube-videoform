@@ -26,13 +26,13 @@ async function register ({
             // Store each field's value
             for (const fieldName of fieldNames) {
                 const value = body.pluginData[fieldName];
-                if (value !== undefined) {
-                    console.log(`Server: Storing ${fieldName} value:`, value);
-                    await storageManager.storeData(fieldName + '-' + video.id, value);
-                }
+                if (!value) return
+
+                await storageManager.storeData(fieldName + '-' + video.id, value);
+
             }
         }
-    });
+    })
 
     // Add your custom value to the video, so the client autofill your field using the previously stored value
     registerHook({
@@ -69,7 +69,7 @@ async function register ({
     });*/
 }
 async function unregister () {
-    return;
+    return
 }
 
 module.exports = {
