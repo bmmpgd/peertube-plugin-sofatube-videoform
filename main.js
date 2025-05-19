@@ -14,6 +14,24 @@ async function register ({
         descriptionHTML: 'Enabling this will modify the video submission and editing form'
     })
 
+    registerSetting({
+        name: 'open-time',
+        label: 'Opening time for screening submissions.',
+        type: 'datetime-local',
+        default: false,
+        private: false,
+        descriptionHTML: 'Starting at this date-time, screening submissions will be open.'
+    })
+
+    registerSetting({
+        name: 'close-time',
+        label: 'Closing time for screening submissions.',
+        type: 'datetime-local',
+        default: false,
+        private: false,
+        descriptionHTML: 'Screening submissions will be closed at this date-time.'
+    })
+
 
     // Store data associated to this video when created or updated
     registerHook({
